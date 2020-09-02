@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import rand from "rand-token";
 
-export interface Link extends mongoose.Document {
+export interface ILink extends mongoose.Document {
   created_date: Date,
-  source: String,
-  destination: String,
-  password: String,
+  source: string,
+  destination: string,
+  password: string,
   max_access: Number,
   max_date: Date
 }
@@ -40,4 +40,4 @@ const linkSchema = new mongoose.Schema({
   versionKey: false,
 });
 
-export const Link = mongoose.model("Link", linkSchema);
+export default mongoose.model<ILink>("Link", linkSchema);

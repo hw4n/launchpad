@@ -8,6 +8,19 @@ exports.followLink = (req: express.Request, res: express.Response) => {
         return;
       }
 
+      if (link.max_access === 0) {
+        return res.send({error: "max access exceeded"});
+      }
+
+      if (link.max_access > 0) {
+        db.findByIdAndUpdate(link._id, { max_access: link.max_access - 1}, { new: true })
+          .then(link => {
+            if (!link) {
+              return;
+            }
+            console.log(link.max_access);
+          });
+      }
       res.redirect(link.destination);
     })
 }

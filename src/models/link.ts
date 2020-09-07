@@ -6,7 +6,7 @@ export interface ILink extends mongoose.Document {
   source: string,
   destination: string,
   password: string,
-  max_access: Number,
+  max_access: number,
   max_date: Date
 }
 

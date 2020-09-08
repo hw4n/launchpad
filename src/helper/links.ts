@@ -14,11 +14,11 @@ exports.followLink = (req: express.Request, res: express.Response) => {
 
       if (link.max_access > 0) {
         db.findByIdAndUpdate(link._id, { max_access: link.max_access - 1}, { new: true })
-          .then(link => {
-            if (!link) {
+          .then(updatedLink => {
+            if (!updatedLink) {
               return;
             }
-            console.log(link.max_access);
+            console.log(`(${link.source}) max_access--; -> ${updatedLink.max_access}`);
           });
       }
       res.redirect(link.destination);

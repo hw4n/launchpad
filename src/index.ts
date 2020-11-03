@@ -6,6 +6,13 @@ import bodyParser from "body-parser";
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(express.static(__dirname + '/public'));
+app.set('view engine', 'ejs');
+
+app.get("/", (req, res) => {
+  res.render('form');
+})
+
 import apiRoute from "./routes"
 app.use("/", apiRoute);
 

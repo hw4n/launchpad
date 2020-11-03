@@ -5,7 +5,7 @@ exports.followLink = (req: express.Request, res: express.Response) => {
   db.findOne({ source: req.params.source })
     .then(link => {
       if (!link) {
-        return;
+        return res.status(404).render("404");
       }
 
       if (link.max_access === 0) {

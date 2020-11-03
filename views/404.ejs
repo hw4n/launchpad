@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 not found</title>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex h-screen justify-center items-center bg-gray-800">
+  <div class="text-white flex flex-col items-center">
+    <pre class="text-xs block">
+
+    d8888   .d8888b.      d8888                         888          .d888                                888
+   d8P888  d88P  Y88b    d8P888                         888         d88P"                                 888
+  d8P 888  888    888   d8P 888                         888         888                                   888
+ d8P  888  888    888  d8P  888       88888b.   .d88b.  888888      888888 .d88b.  888  888 88888b.   .d88888
+d88   888  888    888 d88   888       888 "88b d88""88b 888         888   d88""88b 888  888 888 "88b d88" 888
+8888888888 888    888 8888888888      888  888 888  888 888         888   888  888 888  888 888  888 888  888
+      888  Y88b  d88P       888       888  888 Y88..88P Y88b.       888   Y88..88P Y88b 888 888  888 Y88b 888
+      888   "Y8888P"        888       888  888  "Y88P"   "Y888      888    "Y88P"   "Y88888 888  888  "Y88888
+    </pre>
+    <div class="w-full h-1 bg-white mb-3"></div>
+    <h1 id="gone" class="text-4xl">LINK IS GONE!!</h1>
+    <div id="crab">
+      <pre class="text-xs">
+
+ /\  .  .  /\
+(  ) |  | (  )
+ \/  /--\  \/
+  \-/    \-/
+   /------\
+   / /  \ \
+      </pre>
+      <pre class="hidden">
+
+ /\  .  .  /\
+(  ) |  | (  )
+ \/  /--\  \/
+  \-/    \-/
+   /------\
+      </pre>
+    </div>
+  </div>
+</body>
+<script>
+  const crabs = document.getElementById("crab");
+  const gone = document.getElementById("gone");
+  let idx = 0;
+
+  let goneTable = ["text-2xl", "text-3xl", "text-4xl", "text-3xl"];
+  let goneIdx = 0;
+
+  // https://jsfiddle.net/user/Diggsey
+  function update() {
+    crabs.children[idx].className = "hidden";
+    idx = ++idx % crabs.children.length;
+    crabs.children[idx].className = "text-xs";
+
+    gone.className = goneTable[++goneIdx % goneTable.length];
+  }
+
+  setInterval(update, 500)
+</script>
+</html>

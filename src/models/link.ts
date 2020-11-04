@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import rand from "rand-token";
 
 export interface ILink extends mongoose.Document {
   created_date: Date,
@@ -17,9 +16,7 @@ const linkSchema = new mongoose.Schema({
   },
   source: {
     type: String,
-    default: () => {
-      return rand.generate(5);
-    }
+    required: true
   },
   destination: {
     type: String,

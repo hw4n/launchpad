@@ -33,9 +33,13 @@ exports.followLink = (req: express.Request, res: express.Response) => {
 }
 
 exports.postLink = (req: express.Request, res: express.Response) => {
+  if (req.body.source === "") {
+    delete req.body.source;
+  }
+  
   db.create(req.body)
     .then(newLink => {
-      res.status(201).json(newLink);
+      res.status(201).render("success", { newLink });
     })
     .catch((err: any) => {
       res.send(err);

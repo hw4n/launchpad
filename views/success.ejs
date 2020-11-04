@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Launchpad</title>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex h-screen justify-center items-center bg-gray-800">
+  <div class="text-white text-center flex flex-col items-center">
+    <svg class="fill-current text-teal-500" xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.25 16.518l-4.5-4.319 1.396-1.435 3.078 2.937 6.105-6.218 1.421 1.409-7.5 7.626z"/></svg>
+    <h1 class="mt-5">/<%= newLink.source %> redirects to</h1>
+    <h1><%= newLink.destination %></h1>
+    <button id="copy" class="w-full shadow bg-teal-500 hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold mt-3 py-2 px-4 rounded" type="button">
+      Copy to clipboard
+    </button>
+    <div id="source" class="hidden"><%= newLink.source %></div>
+    <button class="w-full shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold mt-3 py-2 px-4 rounded" type="button" onclick="window.location='/'">
+      Create another link
+    </button>
+  </div>
+</body>
+<script>
+  let url = window.location.href.split('/').slice(2,3)[0];
+  const copyButton = document.getElementById("copy");
+  const source = document.getElementById("source").innerText;
+
+  copyButton.addEventListener("click", () => {
+    const el = document.createElement('textarea');
+    el.value = url + "/" + source;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  });
+</script>
+</html>

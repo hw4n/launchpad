@@ -7,39 +7,39 @@
   <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="flex h-screen justify-center items-center bg-gray-800">
-  <form class="w-full max-w-lg mx-auto">
+  <form class="w-full max-w-lg mx-auto" action="/api/links" method="POST">
     <div class="flex flex-wrap -mx-3 mb-6">
       <div class="w-full px-3 mb-6 md:mb-0">
-        <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-first-name">
+        <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-uri-tag">
           uri tag
         </label>
-        <input class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="dontclick">
+        <input name="source" class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-uri-tag" type="text" placeholder="dontclick">
         <p class="text-gray-600 text-xs italic">Optional, customize lp.hwan.me/{URI TAG}, otherwise random</p>
       </div>
     </div>
     <div class="flex flex-wrap -mx-3 mb-6">
       <div class="w-full px-3">
-        <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-password">
+        <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-destination">
           Destination link
         </label>
-        <input class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" required>
+        <input name="destination" class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-destination" type="url" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" required>
         <p class="text-gray-600 text-xs italic">Required, where to forward</p>
       </div>
     </div>
     <div class="flex flex-wrap -mx-3 mb-6">
       <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-city">
+        <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-max-access">
           max access(es)
         </label>
-        <input class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="number" placeholder="3" min="1">
+        <input name="max_access" class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-max-access" type="number" placeholder="3" min="1">
         <p class="text-gray-600 text-xs italic">Leave it for unlimited</p>
       </div>
       <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-state">
+        <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-use-password">
           requires password
         </label>
         <div class="relative">
-          <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 mb-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+          <select name="usePassword" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 mb-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-use-password">
             <option>No</option>
             <option>Yes</option>
           </select>
@@ -49,14 +49,14 @@
         </div>
       </div>
       <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-zip">
+        <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-password">
           Password
         </label>
-        <input class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="password" placeholder="••••••••••••••" disabled>
+        <input name="password" class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="••••••••••••••" disabled>
       </div>
     </div>
     <div class="flex flex-wrap">
-      <button class="w-full shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-3 px-4 rounded" type="button">
+      <button class="w-full shadow bg-indigo-500 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-3 px-4 rounded" type="submit">
         Create new link
       </button>
     </div>

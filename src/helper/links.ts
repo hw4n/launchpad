@@ -5,7 +5,9 @@ exports.followLink = (req: express.Request, res: express.Response) => {
   db.findOne({ source: req.params.source })
     .then(link => {
       if (!link) {
-        return res.status(404).render("404");
+        return res.status(404).render("404", {
+          message: `So this means the link <span class="not-italic text-white">/${req.params.source}</span> doesn't exist anymore, or it's never been.`
+        });
       }
 
       if (link.max_access === 0) {

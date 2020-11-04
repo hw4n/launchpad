@@ -13,8 +13,8 @@
         <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-uri-tag">
           uri tag
         </label>
-        <input name="source" class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-uri-tag" type="text" placeholder="dontclick">
-        <p class="text-gray-600 text-xs italic">Optional, customize lp.hwan.me/{URI TAG}, otherwise random</p>
+        <input autocomplete="off" name="source" class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-uri-tag" type="text" placeholder="dontclick">
+        <p class="text-gray-600 text-xs italic">Optional, the link will be <span id="hostname"></span>/<span id="source">[Random]</span></p>
       </div>
     </div>
     <div class="flex flex-wrap -mx-3 mb-6">
@@ -22,7 +22,7 @@
         <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-destination">
           Destination link
         </label>
-        <input name="destination" class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-destination" type="url" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" required>
+        <input autocomplete="off" name="destination" class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-destination" type="url" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" required>
         <p class="text-gray-600 text-xs italic">Required, where to forward</p>
       </div>
     </div>
@@ -52,7 +52,7 @@
         <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-password">
           Password
         </label>
-        <input name="password" class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="••••••••••••••" disabled>
+        <input autocomplete="off" name="password" class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="••••••••••••••" disabled>
       </div>
     </div>
     <div class="flex flex-wrap">
@@ -62,4 +62,14 @@
     </div>
   </form>
 </body>
+<script>
+  const hostname = window.location.href.split('/').slice(2,3)[0];
+  const source = document.getElementById("source");
+  document.getElementById("hostname").innerText = hostname;
+
+  const sourceInput = document.getElementById("grid-uri-tag");
+  sourceInput.addEventListener("input", (e) => {
+    source.innerText = e.target.value.length > 0 ? e.target.value : "[Random]"; 
+  });
+</script>
 </html>

@@ -36,6 +36,10 @@ exports.postLink = (req: express.Request, res: express.Response) => {
   if (req.body.source === "") {
     delete req.body.source;
   }
+
+  if (req.body.max_access === "") {
+    req.body.max_access = -1;
+  }
   
   db.create(req.body)
     .then(newLink => {

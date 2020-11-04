@@ -11,7 +11,12 @@ exports.followLink = (req: express.Request, res: express.Response) => {
       }
 
       if (link.max_access === 0) {
-        return res.send({error: "max access exceeded"});
+        return db.findOneAndDelete({ _id: link._id })
+          .then(() => {
+            res.status(404).render("404", {
+              message: `The link <span class="not-italic text-white">/${req.params.source}</span> has reached the maximum number of accesses, and now it's deleted.`
+            });
+          });
       }
 
       if (link.max_access > 0) {

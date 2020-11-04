@@ -11,7 +11,11 @@ router.route("/:source")
   .get(helper.followLink)
 
 router.route("/api/links")
-  .get(helper.getLinks)
   .post(helper.postLink);
+
+router.route("*")
+  .get((req, res) => {
+    res.render('404');
+  })
 
 export = router;

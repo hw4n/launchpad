@@ -1,5 +1,9 @@
 import express from "express";
 import db from "../models";
+import rand from "rand-token";
+const RANDOM_URI_LENGTH = 5;
+import bcrypt from "bcrypt";
+import crypto from "crypto";
 
 exports.followLink = (req: express.Request, res: express.Response) => {
   db.findOne({ source: req.params.source })
@@ -19,6 +23,10 @@ exports.followLink = (req: express.Request, res: express.Response) => {
           });
       }
 
+      if (link.password) {
+        return res.status(302).redirect(`/${req.params.source}/auth`);
+      }
+
       if (link.max_access > 0) {
         db.findByIdAndUpdate(link._id, { max_access: link.max_access - 1}, { new: true })
           .then(updatedLink => {
@@ -32,8 +40,52 @@ exports.followLink = (req: express.Request, res: express.Response) => {
     })
 }
 
-import rand from "rand-token";
-const RANDOM_URI_LENGTH = 5;
+exports.displayAuthForm = (req: express.Request, res: express.Response) => {
+  db.findOne({ source: req.params.source })
+    .then(link => {
+      if (!link) {
+        return res.status(404).render("404");
+      }
+
+      if (link.password !== undefined && link.password.length > 0) {
+        return res.status(401).render("auth");
+      } else {
+        res.redirect(`/${req.params.source}`);
+      }
+    })
+}
+
+exports.authAndFollowLink = (req: express.Request, res: express.Response) => {
+  db.findOne({ source: req.params.source })
+    .then(link => {
+      if (!link) {
+        return res.status(404).render("404");
+      }
+
+      bcrypt.compare(req.body.password, link.password, (err, same) => {
+        if (same) {
+          const iv = link.password_iv;
+          const key = crypto.createHash("SHA256").update(req.body.password).digest("base64").slice(0, 32);
+          const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
+          let decrypted = decipher.update(link.destination, "hex", "utf8");
+          decrypted += decipher.final("utf8");
+
+          if (link.max_access > 0) {
+            db.findByIdAndUpdate(link._id, { max_access: link.max_access - 1}, { new: true })
+              .then(updatedLink => {
+                if (!updatedLink) {
+                  console.log(`could not find ${link._id}`);
+                  return;
+                }
+              });
+          }
+          res.redirect(decrypted);
+        } else {
+          res.status(401).json("wrong pw");
+        }
+      })
+    })
+}
 
 async function sourceIsUnique(source: string = rand.generate(RANDOM_URI_LENGTH)) {
   let unique = false;
@@ -62,6 +114,19 @@ exports.postLink = (req: express.Request, res: express.Response) => {
   
   if (req.body.source === "") {
     delete req.body.source;
+  }
+
+  if (req.body.password !== undefined && req.body.password.length > 0) {
+    const iv = crypto.randomBytes(16).toString("hex").slice(0, 16);
+    req.body.password_iv = iv;
+
+    const key = crypto.createHash("SHA256").update(req.body.password).digest("base64").slice(0, 32);
+    const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
+    let encrypted = cipher.update(req.body.destination, "utf8", "hex");
+    encrypted += cipher.final("hex");
+
+    req.body.destination = encrypted;
+    req.body.password = bcrypt.hashSync(req.body.password, 10);
   }
 
   sourceIsUnique(req.body.source)

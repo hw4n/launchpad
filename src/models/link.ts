@@ -5,6 +5,7 @@ export interface ILink extends mongoose.Document {
   source: string,
   destination: string,
   password: string,
+  password_iv: string,
   max_access: number,
   max_date: Date
 }
@@ -23,6 +24,9 @@ const linkSchema = new mongoose.Schema({
     required: true
   },
   password: {
+    type: String
+  },
+  password_iv: {
     type: String
   },
   max_access: {

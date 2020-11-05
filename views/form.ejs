@@ -7,7 +7,7 @@
   <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="flex h-screen justify-center items-center bg-gray-800">
-  <form class="w-full max-w-lg mx-auto" action="/api/links" method="POST">
+  <form autocomplete="off" class="w-full max-w-lg mx-auto" action="/api/links" method="POST">
     <div class="flex flex-wrap -mx-3 mb-6">
       <div class="w-full px-3 mb-6 md:mb-0">
         <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-uri-tag">
@@ -52,7 +52,7 @@
         <label class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2" for="grid-password">
           Password
         </label>
-        <input autocomplete="off" name="password" class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="••••••••••••••" disabled>
+        <input autocomplete="off" name="password" class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="••••••••••••••" required disabled>
       </div>
     </div>
     <div class="flex flex-wrap">
@@ -71,5 +71,12 @@
   sourceInput.addEventListener("input", (e) => {
     source.innerText = e.target.value.length > 0 ? e.target.value : "[Random]"; 
   });
+
+  const enablePasswordInput = document.getElementById("grid-use-password");
+  const passwordInput = document.getElementById("grid-password");
+  enablePasswordInput.addEventListener("change", (e) => {
+    passwordInput.disabled = e.target.value === "Yes" ? false : true;
+  })
+
 </script>
 </html>

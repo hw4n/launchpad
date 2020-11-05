@@ -8,7 +8,11 @@ router.route("/")
   })
 
 router.route("/:source")
-  .get(helper.followLink)
+  .get(helper.followLink);
+
+router.route("/:source/auth")
+  .get(helper.displayAuthForm)
+  .post(helper.authAndFollowLink);
 
 router.route("/api/links")
   .post(helper.postLink);

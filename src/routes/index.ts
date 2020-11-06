@@ -3,9 +3,7 @@ const router = express.Router();
 import helper from "../helper/links";
 
 router.route("/")
-  .get((req, res) => {
-    res.render('form');
-  })
+  .get(helper.displayForm);
 
 router.route("/:source")
   .get(helper.followLink);

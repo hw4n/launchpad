@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Launchpad</title>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex h-screen justify-center items-center bg-gray-800">
+  <div class="text-white text-center flex flex-col items-center">
+    <svg class="fill-current text-red-500" xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24"><path d="M16.971 0h-9.942l-7.029 7.029v9.941l7.029 7.03h9.941l7.03-7.029v-9.942l-7.029-7.029zm-4.971 19.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm.5-4.25h-1l-1-10h3l-1 10z"/></svg>
+    <h1 class="mt-5 text-red-500"><%= locals.message %></h1>
+    <button onclick="goBack()" class="w-full shadow bg-teal-500 hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold mt-3 py-2 px-4 rounded" type="button">
+      Go back
+    </button>
+  </div>
+</body>
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
+</html>

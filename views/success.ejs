@@ -10,7 +10,7 @@
   <div class="text-white text-center flex flex-col items-center">
     <svg class="fill-current text-teal-500" xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.25 16.518l-4.5-4.319 1.396-1.435 3.078 2.937 6.105-6.218 1.421 1.409-7.5 7.626z"/></svg>
     <p class="mt-5">/<%= newLink.source %> redirects to</p>
-    <p class="text-xs"><%= newLink.destination %></p>
+    <p class="text-xs"><%= encrypted ? "[Encrypted link]" : newLink.destination %></p>
     <p>for <span class="text-teal-500"><%= newLink.max_access === -1 ? "unlimited" : newLink.max_access %> time(s)</span></p>
     <% if (locals.collided) { %>
       <p class="mt-5 text-red-600">Sorry, your URI tag was collided, so it was replaced with randomly generated one</p>

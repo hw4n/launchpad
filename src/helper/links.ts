@@ -47,6 +47,15 @@ exports.displayAuthForm = (req: express.Request, res: express.Response) => {
         return res.status(404).render("404");
       }
 
+      if (link.max_access === 0) {
+        return db.findOneAndDelete({ _id: link._id })
+          .then(() => {
+            res.status(404).render("404", {
+              message: `The link <span class="not-italic text-white">/${req.params.source}</span> has reached the maximum number of accesses, and now it's deleted.`
+            });
+          });
+      }
+
       if (link.password !== undefined && link.password.length > 0) {
         return res.status(401).render("auth");
       } else {
@@ -81,7 +90,7 @@ exports.authAndFollowLink = (req: express.Request, res: express.Response) => {
           }
           res.redirect(decrypted);
         } else {
-          res.status(401).json("wrong pw");
+          res.status(401).render("error", { message: "Wrong password" });
         }
       })
     })
@@ -132,9 +141,15 @@ exports.postLink = (req: express.Request, res: express.Response) => {
   sourceIsUnique(req.body.source)
     .then(d => {
       req.body.source = d.source;
+
+      if (d.collided) {
+        return res.status(409).render("error", { message: "Sorry, your URI tag was collided" });
+      }
+
       db.create(req.body)
         .then(newLink => {
-          res.status(201).render("success", { newLink, collided: d.collided });
+          const encrypted = req.body.password !== undefined;
+          res.status(201).render("success", { newLink, encrypted });
         })
         .catch((err: any) => {
           res.send(err);

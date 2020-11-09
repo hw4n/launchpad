@@ -7,3 +7,18 @@ mongoose.set("debug", true);
 mongoose.connect(DBURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 export default Link;
+
+const HOUR_IN_MILLISECONDS = 1000 * 60 * 60;
+setInterval(() => {
+  Link.deleteMany({
+    max_date: {
+      $lte: new Date()
+    }
+  }).then(query => {
+    if (query.ok) {
+      console.log(`${new Date()} - ${query.deletedCount} links cleaned up!`);
+    } else {
+      console.log(`${new Date()} - Interval link cleanup failed!`);
+    }
+  })
+}, HOUR_IN_MILLISECONDS);

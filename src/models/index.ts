@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Link from "./link";
-const DBURI = process.env.DBURI || "mongodb+srv://";
+const DBURI = process.env.DBURI || "";
 
 mongoose.set("debug", true);
 

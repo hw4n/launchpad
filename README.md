@@ -8,7 +8,7 @@
   <h3 align="center">Launchpad</h3>
 
   <p align="center">
-    A link shortener with more features
+    A simple link shortener with self-destruction and encryption
     <br />
     <a href="https://iro.xyz">Give it a try!</a>
   </p>

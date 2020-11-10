@@ -35,7 +35,7 @@
 ## About The Project
 
 <p align="center">
-  <img src="images/screenshot.png" height="400"/>
+  <img src="images/screenshot.png"/>
 </p>
 
 I just wanted to make a simple link shortener, but it was too ordinary if it only just had a random URL. However, I thought and implemented more features that other link shorteners don't have, and I like it.
@@ -43,6 +43,7 @@ I just wanted to make a simple link shortener, but it was too ordinary if it onl
 Here's why:
 * Easy to use - Paste a link and you are good to go
 * Max access - You can set X for this: "After X clicks the link will self destruct"
+* Max date - After X date, the link will go away
 * Encrypting /w password - The link you entered will be encrypted with your password
 
 A list of commonly used resources that I find helpful are listed in the acknowledgements.

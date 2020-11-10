@@ -10,10 +10,16 @@ export default Link;
 
 const HOUR_IN_MILLISECONDS = 1000 * 60 * 60;
 setInterval(() => {
-  Link.deleteMany({
-    max_date: {
-      $lte: new Date()
-    }
+  Link.deleteMany( {
+    $or: [{
+      max_date: {
+        $lte: new Date()
+      }
+    }, {
+      max_access: {
+        $eq: 0
+      }
+    }]
   }).then(query => {
     if (query.ok) {
       console.log(`${new Date()} - ${query.deletedCount} links cleaned up!`);

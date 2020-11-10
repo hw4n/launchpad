@@ -5,6 +5,7 @@ const RANDOM_URI_LENGTH = 5;
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import axios from "axios";
+import { Mongoose } from "mongoose";
 const RECAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify";
 const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET;
 const RECAPTCHA_SITEKEY = process.env.RECAPTCHA_SITEKEY;
@@ -136,6 +137,18 @@ async function sourceIsUnique(source: string = rand.generate(RANDOM_URI_LENGTH))
   return { source, collided };
 }
 
+const DAY_IN_MILLISECOND = 1000 * 60 * 60 * 24;
+const expireEnum = [
+  DAY_IN_MILLISECOND,
+  DAY_IN_MILLISECOND * 7,
+  DAY_IN_MILLISECOND * 30,
+  DAY_IN_MILLISECOND * 30 * 3,
+  DAY_IN_MILLISECOND * 30 * 6,
+  DAY_IN_MILLISECOND * 30 * 12,
+  DAY_IN_MILLISECOND * 30 * 36,
+  DAY_IN_MILLISECOND * 30 * 1200,
+];
+
 exports.postLink = (req: express.Request, res: express.Response) => {
   axios.post(RECAPTCHA_URL, null, {
     params: {
@@ -149,6 +162,12 @@ exports.postLink = (req: express.Request, res: express.Response) => {
       } else {
         if (req.body.max_access === "") {
           delete req.body.max_access;
+        }
+
+        if (!isNaN(req.body.expireDate)) {
+          req.body.max_date = new Date(+new Date() + expireEnum[req.body.expireDate]);
+        } else {
+          req.body.max_date = new Date(+new Date() + expireEnum[5]);
         }
         
         if (req.body.source === "") {

@@ -35,7 +35,6 @@ const linkSchema = new mongoose.Schema({
   },
   max_date: {
     type: Date,
-    default: new Date(+new Date() + 7*24*60*60*1000)
   },
 }, {
   versionKey: false,
